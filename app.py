@@ -22,5 +22,13 @@ def local_ip():
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
 
+@app.get("/oip")
+def outbound_ip():
+    try:
+        # Ask an external service to tell us our public IP
+        ip = requests.get("https://ifconfig.me/ip", timeout=5).text.strip()
+        return {"outbound_ip": ip}
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
 
 # For local dev:  uvicorn app:app --host 0.0.0.0 --port 8000
