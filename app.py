@@ -13,6 +13,7 @@ def ping():
 
 @app.get("/lip")
 def local_ip():
+    import socket
     try:
         # Get hostname and resolve to IP
         hostname = socket.gethostname()
@@ -20,5 +21,6 @@ def local_ip():
         return {"hostname": hostname, "local_ip": local_ip}
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
+
 
 # For local dev:  uvicorn app:app --host 0.0.0.0 --port 8000
